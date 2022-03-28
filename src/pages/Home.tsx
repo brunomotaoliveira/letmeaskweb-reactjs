@@ -13,6 +13,10 @@ import '../styles/auth.scss';
 export function Home() {
     const navigate = useNavigate();
 
+    function signIn() {
+        
+    }
+
     function navigateToNewRoom() {
         navigate('/rooms/new');
     }

@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { auth, firebase } from '../services/firebase';
@@ -17,13 +18,7 @@ export function Home() {
 
 
     function handleCreateRoom() {
-        const provider = new firebase.auth.GoogleAuthProvider();
-
-        auth.signInWithPopup(provider).then(result => {
-            console.log(result);
-        })
-
-        navigate('/rooms/new');
+            navigate('/rooms/new');
     }
 
     return (

@@ -7,25 +7,46 @@ import { Home } from "./pages/Home";
 import { NewRoom } from "./pages/NewRoom";
 import { auth, firebase } from './services/firebase';
 
-export const AuthContext = createContext({} as any);
+type User = {
+  id: string;
+  name: string;
+  avatar: string;
+}
+
+
+type AuthContextType = {
+  user: User | undefined;
+  signInWithGoogle: () => void;
+}
+
+export const AuthContext = createContext({} as AuthContextType);
 
 function App() {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<User>();
 
-  function signInWithGoogle() {
-    const provider = new firebase.auth.GoogleAuthProvider();
+  async function signInWithGoogle() {
+        const provider = new firebase.auth.GoogleAuthProvider();
 
-        auth.signInWithPopup(provider).then(result => {
+        const result = await auth.signInWithPopup(provider);
+
             if (result.user) {
-              
-            }
+              const { displayName, photoURL, uid } = result.user
 
-        })
+              if(!displayName || !photoURL) {
+                throw new Error('Missing information from Google Account.');
+              }
+
+              setUser({
+                id: uid,
+                name: displayName,
+                avatar: photoURL
+              })
+            }
   }
 
   return (
     <BrowserRouter>
-      <AuthContext.Provider value={{ value, setValue }}>
+      <AuthContext.Provider value={{ user, signInWithGoogle }}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/rooms/new" element={<NewRoom />} />

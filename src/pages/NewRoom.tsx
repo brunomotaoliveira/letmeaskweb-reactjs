@@ -13,7 +13,11 @@ import { useAuth } from '../hooks/useAuth';
 
 
 export function NewRoom() {
-    const { user } = useAuth();
+    //const { user } = useAuth();
+
+    async function handleCreateRoom() {
+
+    }
 
     return (
        <div id='page-auth'>
@@ -27,7 +31,7 @@ export function NewRoom() {
                    <img src={logoImg} alt='Letmeask' />
                    <h2>Criar uma nova sala</h2>
                    
-                   <form>
+                   <form onSubmit={handleCreateRoom}>
                        <input 
                             type="text"
                             placeholder='Nome da sala' 

@@ -10,12 +10,13 @@ import { useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { useAuth } from '../hooks/useAuth';
 
+import { FormEvent } from 'react';
 
 
 export function NewRoom() {
     //const { user } = useAuth();
 
-    async function handleCreateRoom() {
+    async function handleCreateRoom(event: FormEvent) {
 
     }
 

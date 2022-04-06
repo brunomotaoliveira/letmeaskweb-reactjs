@@ -6,7 +6,7 @@ import { Button } from '../components/Button';
 import { Link } from 'react-router-dom';
 
 import '../styles/auth.scss';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { useAuth } from '../hooks/useAuth';
 
@@ -16,8 +16,10 @@ import { FormEvent } from 'react';
 export function NewRoom() {
     //const { user } = useAuth();
 
-    async function handleCreateRoom(event: FormEvent) {
+    const [newRoom, setNewRoom] = useState('');
 
+    async function handleCreateRoom(event: FormEvent) {
+        event.preventDefault();
     }
 
     return (
@@ -35,7 +37,10 @@ export function NewRoom() {
                    <form onSubmit={handleCreateRoom}>
                        <input 
                             type="text"
-                            placeholder='Nome da sala' 
+                            placeholder='Nome da sala'
+                            onChange={event => setNewRoom(event.target.value)} 
+                            value={newRoom}
+
                        />
                        <Button type='submit'>
                            Criar sala

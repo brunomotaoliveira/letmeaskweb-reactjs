@@ -3,7 +3,7 @@ import logoImg from '../assets/images/logo.svg';
 import googleIconImg from '../assets/images/google-icon.svg';
 
 import { Button } from '../components/Button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import '../styles/auth.scss';
 import { useContext, useState } from 'react';
@@ -17,7 +17,7 @@ import { database } from '../services/firebase';
 
 export function NewRoom() {
     const { user } = useAuth();
-
+    const history = useNavigate();
     const [newRoom, setNewRoom] = useState('');
 
     async function handleCreateRoom(event: FormEvent) {
@@ -33,6 +33,8 @@ export function NewRoom() {
             title: newRoom,
             authorId: user?.id
         });
+
+        history.push(`/rooms/${firebaseRoom.key}`);
     }
 
     return (

@@ -12,14 +12,27 @@ import { useAuth } from '../hooks/useAuth';
 
 import { FormEvent } from 'react';
 
+import { database } from '../services/firebase';
+
 
 export function NewRoom() {
-    //const { user } = useAuth();
+    const { user } = useAuth();
 
     const [newRoom, setNewRoom] = useState('');
 
     async function handleCreateRoom(event: FormEvent) {
         event.preventDefault();
+
+        if(newRoom.trim() == '') {
+            return;
+        }
+
+        const roomRef = database.ref('rooms');
+
+        const firebaseRoom = await roomRef.push({
+            title: newRoom,
+            authorId: user?.id
+        });
     }
 
     return (

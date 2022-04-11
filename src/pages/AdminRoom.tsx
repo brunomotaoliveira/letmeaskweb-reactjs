@@ -1,6 +1,6 @@
 import { type } from '@testing-library/user-event/dist/type';
 import { FormEvent, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { StringMappingType } from 'typescript';
 
 
@@ -25,11 +25,21 @@ type RoomParams = {
 
 export function AdminRoom() {
     //const { user } = useAuth();
+    const history = useHistory();
     const params = useParams<RoomParams>(); //generic parametro que passa para tipagem
     const roomId = params.id;
     
     
     const { title, questions} = useRoom(roomId);
+
+    async function handleEndRoom() {
+        await database.ref(`rooms/${roomId}`).update({
+            endedAt: new Date(),
+        })
+
+        history.push('/');
+
+    }
     
     async function handleDeleteQuestion(questionId: string) {
         if (window.confirm('Tem certeza que você deseja excluir esta pergunta?')) {
@@ -46,7 +56,7 @@ export function AdminRoom() {
                     <img src={logoImg} alt="Letmeask" />
                     <div>
                         <RoomCode code={roomId} />
-                        <Button isOutlined>Encerrar Sala</Button>
+                        <Button isOutlined onClick={handleEndRoom}>Encerrar Sala</Button>
                     </div>
                 </div>
             </header>

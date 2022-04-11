@@ -1,3 +1,5 @@
+import './styles.scss';
+
 type QuestionProps = {
     content: string;
     author: {
@@ -6,6 +8,7 @@ type QuestionProps = {
     }
 
 }
+
 
 
 export function Question({
